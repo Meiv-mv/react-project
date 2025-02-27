@@ -1,0 +1,9 @@
+body {
+    background-color: rgb(33, 37, 41);
+}
+
+@media (min-width: 992px) {
+    main div{
+        border-radius: 10px;
+    }
+}
