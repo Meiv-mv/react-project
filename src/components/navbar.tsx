@@ -14,16 +14,16 @@ export default function Navbar() {
                             <a className="nav-link active" aria-current="page" href="#">Bio</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Hobby</a>
+                            <a className="nav-link" href="#hobby-section">Hobby</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Meteo</a>
+                            <a className="nav-link" href="#weather-section">Meteo</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Dati Websocket</a>
+                            <a className="nav-link" href="#websocket-section">Dati Websocket</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Contattami</a>
+                            <a className="nav-link" href="#contact-section">Contattami</a>
                         </li>
                     </ul>
                 </div>
