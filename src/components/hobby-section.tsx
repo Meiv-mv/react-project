@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry } from "ag-grid-community";
 import { ClientSideRowModelModule } from "ag-grid-community";
+import { v4 as uuidv4 } from 'uuid';
 import { Dialog, DialogTitle, DialogContent, Button, DialogActions, TextField, Select, MenuItem } from '@mui/material';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
@@ -9,7 +10,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 interface modalProps {
     handleClose: (passedHobby: object) => void;
     open: boolean;
-    editingHobby?: {hobby?: string, esperienza?: string};
+    editingHobby?: {id?: string, hobby?: string, esperienza?: string};
 }
 
 function Modal({ open, handleClose, editingHobby }: modalProps) {
@@ -18,7 +19,7 @@ function Modal({ open, handleClose, editingHobby }: modalProps) {
 
     function save() {
         if (inputBar.current?.value && selectRef.current?.value) {
-            handleClose({hobby: inputBar.current.value, esperienza: selectRef.current.value});
+            handleClose({id: editingHobby?.id, hobby: inputBar.current.value, esperienza: selectRef.current.value});
         } else {
             alert("Riempire correttamente i campi")
             return
@@ -73,7 +74,7 @@ export default function HobbySection() {
             cellRenderer: (params: any) => (
                 <Buttons
                     onEdit={() => handleEdit(params.node.data)}
-                    onDelete={() => handleDelete(params.node.data.hobby)}
+                    onDelete={() => handleDelete(params.node.data.id)}
                 />
             ),
             flex: 1,
@@ -90,11 +91,12 @@ export default function HobbySection() {
             return
         }
 
+        const id = uuidv4();
         let newHobby: string | undefined = inputRef.current?.value;
         const expLevels = ["Neofita", "Bassa", "Base", "Buona", "Ottima", "Eccellente", "Esperto"];
         const newHobbyExp: string = expLevels[Number(rangeRef.current?.value)]
 
-        setRowData([...rowData, {hobby: newHobby, esperienza: newHobbyExp }]);
+        setRowData([...rowData, {id: id.slice(0, 8), hobby: newHobby, esperienza: newHobbyExp }]);
 
         if (inputRef.current?.value) {
             inputRef.current.value = ""
@@ -105,8 +107,8 @@ export default function HobbySection() {
     }
 
     // Edit Hobby
-    // Need to add unique ID to rowData, 'cause if there are 2 hobby with the same name they will be both edited
     interface objectProps {
+        id?: string;
         hobby?: string,
         esperienza?: string,
     }
@@ -114,18 +116,18 @@ export default function HobbySection() {
     const [editingHobby, setEditingHobby] = useState<objectProps>({});
     function handleEdit(params: any) {
         console.log("Editing hobby");
-        setEditingHobby({hobby: params.hobby, esperienza: params.esperienza});
+        setEditingHobby({id: params.id, hobby: params.hobby, esperienza: params.esperienza});
         setVisible(true);
     }
 
-    function handleClose(passedHobby: {hobby?: string, esperienza?: string}) {
-        setRowData(prevData => prevData.map(row => row.hobby === editingHobby.hobby ? {...passedHobby} : row));
+    function handleClose(passedHobby: objectProps) {
+        setRowData(prevData => prevData.map(row => row.id === editingHobby.id ? {...passedHobby} : row));
         setVisible(false);
     }
 
     // Delete Hobby
     function handleDelete(hobbyToDelete: string) {
-        setRowData(prevData => prevData.filter(row => row.hobby !== hobbyToDelete));
+        setRowData(prevData => prevData.filter(row => row.id !== hobbyToDelete));
     }
 
     return (
