@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import L, {LatLngExpression} from 'leaflet'
+import { Box, CircularProgress} from "@mui/material";
 const apiKey = "e22084dc16b09ad59917b9a99d7e29e6"
 
 interface weatherBoxProps {
@@ -24,12 +25,14 @@ function WeatherBox({city, temperature, humidity, windSpeed, description}: weath
     )
 }
 
-function LoadingBox() {
+function CircularIndeterminate() {
     return (
-        <div className="col-12" id="loading-box">
-            <p>Sto caricando le informazioni sul meteo...</p>
+        <div className="col-12">
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CircularProgress />
+            </Box>
         </div>
-    )
+    );
 }
 
 function ErrorBox() {
@@ -83,12 +86,12 @@ export default function WeatherSection() {
                 setTimeout(() => {
                     setBox(1)
                     setCenter([json.coord.lat, json.coord.lon])
-                }, 300)
+                }, 400)
             }
         } catch (err) {
             setTimeout(() => {
                 setBox(3)
-            }, 300)
+            }, 400)
         }
 
         if (inputRef.current) {
@@ -126,7 +129,7 @@ export default function WeatherSection() {
                     </div>
                 </div>
                 {box === 1 && <WeatherBox city={weather.city} temperature={weather.temperature} humidity={weather.humidity} windSpeed={weather.windSpeed} description={weather.description} />}
-                {box === 2 && <LoadingBox />}
+                {box === 2 && <CircularIndeterminate />}
                 {box === 3 && <ErrorBox />}
                 <div className="col-12" style={{height: "250px", width: "100%"}}>
                     <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{ height: "100%", width: "100%" }}>

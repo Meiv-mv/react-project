@@ -35,7 +35,7 @@ function Realtime() {
 
     return (
         <div className="col-12" id="realtime">
-            <p>{Object.keys(obj).length === 0 ? "Aspettando aggiornamenti dalla socket..." : "Ecco i dati in realtime:"}</p>
+            <p>{Object.keys(obj).length === 0 ? "Collegamento alla socket..." : "Socket connessa!"}</p>
             <p>Temperatura: {obj.temperature}°</p>
             <p>Umidità: {obj.humidity}%</p>
             <p>Pressione: {obj.pressure}hPA</p>

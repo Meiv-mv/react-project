@@ -1,11 +1,56 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry } from "ag-grid-community";
 import { ClientSideRowModelModule } from "ag-grid-community";
+import { Dialog, DialogTitle, DialogContent, Button, DialogActions, TextField, Select, MenuItem } from '@mui/material';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-function Buttons({onEdit, onDelete}: {onEdit: () => void, onDelete: () => void}) {
+interface modalProps {
+    handleClose: (passedHobby: object) => void;
+    open: boolean;
+    editingHobby?: {hobby?: string, esperienza?: string};
+}
+
+function Modal({ open, handleClose, editingHobby }: modalProps) {
+    const inputBar = useRef<HTMLInputElement>(null);
+    const selectRef = useRef<HTMLSelectElement>(null);
+
+    function save() {
+        if (inputBar.current?.value && selectRef.current?.value) {
+            handleClose({hobby: inputBar.current.value, esperienza: selectRef.current.value});
+        } else {
+            alert("Riempire correttamente i campi")
+            return
+        }
+    }
+
+    return (
+        <React.Fragment>
+            <Dialog open={open} onClose={handleClose}>
+               <DialogTitle>Edit Hobby</DialogTitle>
+               <DialogContent>
+                   <TextField type="text" name="hobby-name" id="hobby-name" label="Hobby" variant="standard"
+                              margin="dense" defaultValue={editingHobby?.hobby} inputRef={inputBar} required/>
+                   <Select label="Esperienza" defaultValue={editingHobby?.esperienza} inputRef={selectRef}>
+                       <MenuItem value={"Neofita"}>Neofita</MenuItem>
+                       <MenuItem value={"Bassa"}>Bassa</MenuItem>
+                       <MenuItem value={"Base"}>Base</MenuItem>
+                       <MenuItem value={"Buona"}>Buona</MenuItem>
+                       <MenuItem value={"Ottima"}>Ottima</MenuItem>
+                       <MenuItem value={"Eccellente"}>Eccellente</MenuItem>
+                       <MenuItem value={"Esperto"}>Esperto</MenuItem>
+                   </Select>
+               </DialogContent>
+               <DialogActions>
+                   <Button variant="outlined" onClick={save}>Save</Button>
+               </DialogActions>
+            </Dialog>
+        </React.Fragment>
+    )
+}
+
+function Buttons({onEdit, onDelete}: { onEdit: () => void, onDelete: () => void }) {
     return (
         <div className="grid-btn-container">
             <button className="btn btn-success rounded-circle" onClick={onEdit}>
@@ -20,29 +65,31 @@ export default function HobbySection() {
     const inputRef = useRef<HTMLInputElement>(null);
     const rangeRef = useRef<HTMLInputElement>(null);
     const [rowData, setRowData] = useState<Array<any>>([]);
-    const [colDefs, setColDefs] = useState<Array<any>>([
-        {field: "hobby", flex: 3, resizable: false, suppressMovable: true},
-        {field: "esperienza", flex: 2, resizable: false, suppressMovable: true},
+    const colDefs = useMemo(() => [
+        { field: "hobby", flex: 3, resizable: false, suppressMovable: true },
+        { field: "esperienza", flex: 2, resizable: false, suppressMovable: true },
         {
             field: "",
-            cellRenderer: (params: any) => {
-                return (
-                    <Buttons onEdit={() => handleEdit()} onDelete={() => handleDelete(params.node.data.hobby)} />
-                )
-            },
+            cellRenderer: (params: any) => (
+                <Buttons
+                    onEdit={() => handleEdit(params.node.data)}
+                    onDelete={() => handleDelete(params.node.data.hobby)}
+                />
+            ),
             flex: 1,
             resizable: false,
             suppressMovable: true
         }
-    ]);
+    ], []);
+    const [visible, setVisible] = useState<boolean>(false);
 
+    // Add Hobby
     function addHobby() {
         if (inputRef.current?.value === "") {
             alert("Inserisci un hobby!")
             return
         }
 
-        // let newId: number = Date.now()
         let newHobby: string | undefined = inputRef.current?.value;
         const expLevels = ["Neofita", "Bassa", "Base", "Buona", "Ottima", "Eccellente", "Esperto"];
         const newHobbyExp: string = expLevels[Number(rangeRef.current?.value)]
@@ -57,20 +104,33 @@ export default function HobbySection() {
         }
     }
 
-    function handleEdit() {
+    // Edit Hobby
+    // Need to add unique ID to rowData, 'cause if there are 2 hobby with the same name they will be both edited
+    interface objectProps {
+        hobby?: string,
+        esperienza?: string,
+    }
+
+    const [editingHobby, setEditingHobby] = useState<objectProps>({});
+    function handleEdit(params: any) {
         console.log("Editing hobby");
+        setEditingHobby({hobby: params.hobby, esperienza: params.esperienza});
+        setVisible(true);
     }
 
+    function handleClose(passedHobby: {hobby?: string, esperienza?: string}) {
+        setRowData(prevData => prevData.map(row => row.hobby === editingHobby.hobby ? {...passedHobby} : row));
+        setVisible(false);
+    }
+
+    // Delete Hobby
     function handleDelete(hobbyToDelete: string) {
-        setRowData(prevData => {
-            const updatedData = prevData.filter(item => item.hobby !== hobbyToDelete);
-            return updatedData;
-        });
+        setRowData(prevData => prevData.filter(row => row.hobby !== hobbyToDelete));
     }
-
 
     return (
         <div style={{backgroundColor: "darkslategrey", color: "whitesmoke"}} className="col-12">
+            <Modal handleClose={handleClose} open={visible} editingHobby={editingHobby}/>
             <div className="row">
                 <div className="col-12">
                     <h2 id="hobby-section">Hobby</h2>

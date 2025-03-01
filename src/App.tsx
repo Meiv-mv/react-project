@@ -5,7 +5,6 @@ import Bio from './components/bio'
 import HobbySection from './components/hobby-section'
 import ContactSection from './components/contact-section'
 import WeatherSection from './components/weather-section'
-// import logo from './logo.svg';
 import './App.css';
 
 
