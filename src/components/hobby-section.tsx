@@ -115,7 +115,6 @@ export default function HobbySection() {
 
     const [editingHobby, setEditingHobby] = useState<objectProps>({});
     function handleEdit(params: any) {
-        console.log("Editing hobby");
         setEditingHobby({id: params.id, hobby: params.hobby, esperienza: params.esperienza});
         setVisible(true);
     }

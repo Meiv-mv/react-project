@@ -29,7 +29,7 @@ function CircularIndeterminate() {
     return (
         <div className="col-12">
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <CircularProgress />
+                <CircularProgress color="inherit" />
             </Box>
         </div>
     );

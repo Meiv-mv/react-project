@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Box, CircularProgress} from "@mui/material";
 const websocketUrl: string = 'ws://192.168.7.254/ws';
+
 
 // Realtime component
 function Realtime() {
@@ -35,7 +37,9 @@ function Realtime() {
 
     return (
         <div className="col-12" id="realtime">
-            <p>{Object.keys(obj).length === 0 ? "Collegamento alla socket..." : "Socket connessa!"}</p>
+            {Object.keys(obj).length === 0 ? <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CircularProgress color="inherit" />
+            </Box> : null}
             <p>Temperatura: {obj.temperature}°</p>
             <p>Umidità: {obj.humidity}%</p>
             <p>Pressione: {obj.pressure}hPA</p>
