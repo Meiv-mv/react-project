@@ -67,17 +67,22 @@ export default function WebSocketSection() {
 
 
     return (
-        <div className="col-12" style={{padding: "5px", backgroundColor: "darkslategrey"}}>
-            <div className="row gy-2">
+        <div className="col-12" style={{padding: "5px", backgroundColor: "darkslategrey",color: "whitesmoke", minHeight: "520px"}}>
+            <div className="row gy-2 align-items-center" style={{height: "100%"}}>
                 <div className="col-12">
-                    <h2 id="websocket-section">Dati WebSocket</h2>
+                    <div className="row">
+                        <div className="col-12">
+                            <h2 id="websocket-section">Dati WebSocket</h2>
+                        </div>
+                        <div className="col-12">
+                            <button type="button" className={isRealtime ? "btn btn-outline-danger" : "btn btn-outline-info"} id="realtime-btn"
+                                    onClick={() => setIsRealtime(!isRealtime)}>{isRealtime ? "Stop" : "Dati Realtime"}</button>
+                            <button type="button" className="btn btn-outline-info" onClick={callHistory}>Controlla Storico</button>
+                        </div>
+                    </div>
+
                 </div>
                 {isRealtime && <Realtime/>}
-                <div className="col-12">
-                    <button type="button" className={isRealtime ? "btn btn-outline-danger" : "btn btn-outline-info"} id="realtime-btn"
-                            onClick={() => setIsRealtime(!isRealtime)}>{isRealtime ? "Stop" : "Dati Realtime"}</button>
-                    <button type="button" className="btn btn-outline-info" onClick={callHistory}>Controlla Storico</button>
-                </div>
             </div>
         </div>
     )

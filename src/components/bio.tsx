@@ -1,14 +1,14 @@
 export default function Bio() {
     return (
-        <div style={{backgroundColor: "darkslategrey", color: "whitesmoke", height: "100%"}} className="col-12" id="bio-section">
-            <div className="row align-items-center">
-                <div className="col-5">
+        <div style={{backgroundColor: "darkslategrey", color: "whitesmoke", height: "520px"}} className="col-12" id="bio-section">
+            <div className="row align-items-center" style={{height:'100%'}}>
+                <div className="col-4">
                     <img className="img-fluid img-thumbnail rounded-circle"
                          style={{width: "150px", height: "150px", objectFit: "cover", objectPosition: "center"}}
-                         src="/img/profile-pic.jpg"
+                         src="/img/profile-pic.png"
                          alt="immagine personale"/>
                 </div>
-                <div className="col">
+                <div className="col-8">
                     <h1>Marco Verrone, 23</h1>
                     <p>
                         Aspirante sviluppatore web.

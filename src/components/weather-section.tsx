@@ -111,7 +111,7 @@ export default function WeatherSection() {
     }
 
     return (
-        <div className="col-12" style={{padding: "5px", backgroundColor: "darkslategrey"}}>
+        <div className="col-12" style={{padding: "5px", backgroundColor: "darkslategrey", color: "whitesmoke",minHeight: "520px"}}>
             <div className="row gy-2">
                 <div className="col-12">
                     <h2 id="weather-section">Meteo</h2>
@@ -131,7 +131,7 @@ export default function WeatherSection() {
                 {box === 1 && <WeatherBox city={weather.city} temperature={weather.temperature} humidity={weather.humidity} windSpeed={weather.windSpeed} description={weather.description} />}
                 {box === 2 && <CircularIndeterminate />}
                 {box === 3 && <ErrorBox />}
-                <div className="col-12" style={{height: "250px", width: "100%"}}>
+                <div className="col-12" style={{height: "350px", width: "100%"}}>
                     <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{ height: "100%", width: "100%" }}>
                         <TileLayer
                             attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"

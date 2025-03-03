@@ -47,7 +47,7 @@ export default function ContactSection() {
                 <label htmlFor="subject" className="floating-label" style={{color: "rgb(33, 37, 41)"}}>Oggetto Email</label>
             </div>
             <div className="col-10">
-                <textarea className="form-control" ref={messageInput} name="message" id="message" cols={30} rows={10} style={{resize: "none"}} placeholder="Scrivi qui..." required></textarea>
+                <textarea className="form-control" ref={messageInput} name="message" id="message" cols={30} rows={8} style={{resize: "none"}} placeholder="Scrivi qui..." required></textarea>
             </div>
             <div className="col-10 d-flex justify-content-center">
                 <button type="submit" className="btn btn-outline-info mb-2">Invia</button>

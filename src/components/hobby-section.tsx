@@ -130,7 +130,7 @@ export default function HobbySection() {
     }
 
     return (
-        <div style={{backgroundColor: "darkslategrey", color: "whitesmoke"}} className="col-12">
+        <div style={{backgroundColor: "darkslategrey", color: "whitesmoke", height: "520px"}} className="col-12">
             <Modal handleClose={handleClose} open={visible} editingHobby={editingHobby}/>
             <div className="row">
                 <div className="col-12">
@@ -166,7 +166,7 @@ export default function HobbySection() {
                     </div>
                 </div>
                 <div className="col-12" style={{marginBottom: "5px"}}>
-                    <div id="myGrid" style={{height: "300px", width: "100%"}}>
+                    <div id="myGrid" style={{height: "380px", width: "100%"}}>
                         <AgGridReact rowData={rowData} columnDefs={colDefs} />
                     </div>
                 </div>

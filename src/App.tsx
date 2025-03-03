@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react'
 import WebSocketSection from './components/websocket'
 import Navbar from './components/navbar'
 import Bio from './components/bio'
@@ -9,45 +10,42 @@ import './App.css';
 
 
 function App() {
+    const [box, setBox] = useState<number>(0);
+
+    function handleBoxChange(boxNumber: number) {
+        setBox(boxNumber)
+    }
+
   return (
       <div className="App">
           {/* Navigation Bar */}
-          <Navbar/>
+          <Navbar changeComponent={handleBoxChange} box={box} />
 
           {/* Main Section */}
           <main className="container-lg text-center" style={{marginTop: "56px"}}>
               <div className="row">
-                  {/* Main Column */}
-                  <div className="col-12 col-lg-8">
-                      <div className="row g-lg-3">
-                          {/* BIO */}
-                          <Bio />
 
-                          {/* Hobby Section */}
-                          <HobbySection />
-                      </div>
+                  {/* BIO */}
+                  {box === 0 && <Bio/>}
 
-                  </div>
+                  {/* Hobby Section */}
+                  {box === 1 && <HobbySection/>}
 
-                  {/* Side Column */}
-                  <div style={{color: "whitesmoke"}} className="col-12 col-lg-4">
-                      <div className="row g-lg-3">
-                          {/* Weather Section */}
-                          <WeatherSection />
+                  {/* Weather Section */}
+                  {box === 2 && <WeatherSection/>}
 
-                          {/* Websocket */}
-                          <WebSocketSection />
-                      </div>
-                  </div>
-
+                  {/* Websocket */}
+                  {box === 3 && <WebSocketSection/>}
 
                   </div>
           </main>
 
           {/* Footer */}
-          <footer className="container-fluid" style={{backgroundColor: "rgb(33, 37, 41)", color: "whitesmoke", marginTop: "10px"}}>
-            {/* Contact Form */}
-            <ContactSection />
+          <footer className="container-fluid" style={{backgroundColor: "rgb(33, 37, 41)", color: "whitesmoke", marginTop: "10px", height: "300px"}}>
+              <div className="container-lg">
+                  {/* Contact Form */}
+                  <ContactSection />
+              </div>
           </footer>
 
       </div>

@@ -2,6 +2,10 @@ body {
     background-color: rgb(33, 37, 41);
 }
 
+.navbar a:hover{
+    cursor: pointer;
+}
+
 #myGrid .btn{
     width: 30px;
     height: 30px;
