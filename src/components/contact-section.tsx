@@ -34,7 +34,7 @@ export default function ContactSection() {
     }
 
     return (
-        <form className="row g-3" action="/email-contact" method="POST" id="contact-form" ref={form} onSubmit={handleSubmit}>
+        <form className="row g-2 justify-content-center" action="/email-contact" method="POST" id="contact-form" ref={form} onSubmit={handleSubmit}>
             <div className="col-12">
                 <h2 id="contact-section">Contattami</h2>
             </div>
