@@ -1,41 +1,37 @@
-import React from 'react';
-import { useEffect, useState } from 'react'
+import React from 'react'
 import WebSocketSection from './components/websocket'
 import Navbar from './components/navbar'
 import Bio from './components/bio'
 import HobbySection from './components/hobby-section'
 import ContactSection from './components/contact-section'
 import WeatherSection from './components/weather-section'
-import './App.css';
+import './App.css'
+import { useSelector } from 'react-redux'
 
 
 function App() {
-    const [box, setBox] = useState<number>(0);
-
-    function handleBoxChange(boxNumber: number) {
-        setBox(boxNumber)
-    }
+    const componentToMount = useSelector((state: any) => state.box.value)
 
   return (
       <div className="App">
           {/* Navigation Bar */}
-          <Navbar changeComponent={handleBoxChange} box={box} />
+          <Navbar />
 
           {/* Main Section */}
           <main className="container-lg text-center" style={{marginTop: "56px"}}>
               <div className="row">
 
                   {/* BIO */}
-                  {box === 0 && <Bio/>}
+                  {componentToMount === 0 && <Bio/>}
 
                   {/* Hobby Section */}
-                  {box === 1 && <HobbySection/>}
+                  {componentToMount === 1 && <HobbySection/>}
 
                   {/* Weather Section */}
-                  {box === 2 && <WeatherSection/>}
+                  {componentToMount === 2 && <WeatherSection/>}
 
                   {/* Websocket */}
-                  {box === 3 && <WebSocketSection/>}
+                  {componentToMount === 3 && <WebSocketSection/>}
 
                   </div>
           </main>
