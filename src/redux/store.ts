@@ -3,7 +3,7 @@ import { boxReducer} from "./reducer/boxReducer";
 
 const store = configureStore({
     reducer: {
-        box: boxReducer,
+        box: boxReducer
     }
 })
 

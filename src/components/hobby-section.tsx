@@ -28,7 +28,7 @@ function Modal({ open, handleClose, editingHobby }: modalProps) {
 
     return (
         <React.Fragment>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open}>
                <DialogTitle>Edit Hobby</DialogTitle>
                <DialogContent>
                    <TextField type="text" name="hobby-name" id="hobby-name" label="Hobby" variant="standard"
@@ -83,6 +83,22 @@ export default function HobbySection() {
         }
     ], []);
     const [visible, setVisible] = useState<boolean>(false);
+
+    // localstorage
+    useEffect(() => {
+        if (JSON.parse(localStorage.getItem('hobbyList') as string)){
+            setRowData(JSON.parse(localStorage.getItem('hobbyList') as string))
+        }
+    }, []);
+
+    useEffect(() => {
+        updateLocalStorage()
+    }, [rowData]);
+
+    function updateLocalStorage() {
+        localStorage.setItem('hobbyList', JSON.stringify(rowData));
+    }
+
 
     // Add Hobby
     function addHobby() {

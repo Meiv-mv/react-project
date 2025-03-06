@@ -34,10 +34,7 @@ export default function ContactSection() {
     }
 
     return (
-        <form className="row g-2 justify-content-center" action="/email-contact" method="POST" id="contact-form" ref={form} onSubmit={handleSubmit}>
-            <div className="col-12">
-                <h2 id="contact-section">Contattami</h2>
-            </div>
+        <form className="row g-2 justify-content-center" action="/email-contact" method="POST" ref={form} onSubmit={handleSubmit}>
             <div className="col-8 form-floating">
                 <input className="form-control" ref={emailInput} type="email" name="email" id="email" placeholder="email@example.com" required/>
                 <label htmlFor="email" className="floating-label" style={{color: "rgb(33, 37, 41)"}}>Email</label>

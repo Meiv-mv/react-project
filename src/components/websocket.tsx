@@ -52,11 +52,15 @@ function Realtime() {
 // better start just by rendering a "static" ag grid with the history updated up to the call moment
 // to implement w/o any problems both realtime and history while being updated I probably need a BackEnd like mongoDB
 // I need to make the socket being listened everytime to update the history file, if I do not want to usa a database
-function History() {
-    return (
-        <div className="col-12" id="history"></div>
-    )
-}
+// function History() {
+//     useEffect(() => {
+//         const history: Array<> = JSON.parse(fs.readdirSync('./files/history.json'));
+//     }, []);
+//
+//     return (
+//         <div className="col-12" id="history"></div>
+//     )
+// }
 
 function callHistory() {
     console.log("call history");
